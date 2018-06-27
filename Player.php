@@ -7,8 +7,18 @@ namespace BlackJack;
  */
 class Player {
 
+  /**
+   * 山札.
+   *
+   * @var Deck
+   */
   private $deck;
 
+  /**
+   * 保持しているカード.
+   *
+   * @var Card[]
+   */
   private $cards = [];
 
   /**
