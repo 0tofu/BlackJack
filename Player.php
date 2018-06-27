@@ -6,48 +6,40 @@ namespace BlackJack;
  * Playerクラスの定義.
  */
 class Player {
-  const MARKS = ['ハート', 'スペード', 'ダイヤ', 'クラブ'];
 
-  static private $trump = [];
+  private $deck;
 
   private $cards = [];
 
   /**
    * コンストラクタ.
+   *
+   * @param Deck $deck
    */
-  public function __construct() {
-    // トランプが未定義の場合、トランプを生成.
-    if (empty(Player::$trump)) {
-      foreach (self::MARKS as $mark) {
-        foreach (range(1, 13) as $num) {
-          if ($num > 10) {
-            $num = 10;
-          }
-          Player::$trump[$mark][] = $num;
-        }
-      }
-    }
+  public function __construct(Deck $deck) {
+    $this->deck = $deck;
   }
 
   /**
-   * カードを引くメソッド.
+   * カードを引く.
    *
-   * @return array
+   * @return string
    *   引いたカード.
    */
   public function choiseCard() {
-
-    $mark = self::MARKS[rand(0, count(self::MARKS) - 1)];
-    $num = rand(0, count(Player::$trump[$mark]) - 1);
-
-    $card = [
-      'mark' => $mark,
-      'num' => Player::$trump[$mark][$num],
-    ];
-    array_splice(Player::$trump[$mark], $num, 1);
-
+    $card = $this->deck->choiceCard();
     $this->cards[] = $card;
-    return $card;
+
+    return $card->getMark() . 'の' . $card->getDisplayName();
+  }
+
+  /**
+   * 21を超えたか判定する.
+   *
+   * @return bool
+   */
+  public function isBurst() {
+    return $this->getCardsSum() > 21;
   }
 
   /**
@@ -56,12 +48,14 @@ class Player {
    * @param int $num
    *   num枚目のカード.
    *
-   * @return array
+   * @return string
    *   カード.
    */
   public function getSelectedCard($num) {
     $num--;
-    return $this->cards[$num];
+    $card = $this->cards[$num];
+
+    return $card->getMark() . 'の' . $card->getDisplayName();
   }
 
   /**
@@ -76,7 +70,7 @@ class Player {
     }
 
     return array_reduce($this->cards, function($sum, $card) {
-      $sum += $card['num'];
+      $sum += $card->getPoint();
       return $sum;
     });
   }
