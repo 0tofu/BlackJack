@@ -77,7 +77,7 @@ class Player {
    *   判定結果.
    */
   public function isBurst() {
-    return $this->getCardsSum() > 21;
+    return $this->getCardsScore() > 21;
   }
 
   /**
@@ -101,7 +101,7 @@ class Player {
    * @return int
    *   合計点数.
    */
-  public function getCardsSum() {
+  public function getCardsScore() {
     if (count($this->cards) === 0) {
       return 0;
     }

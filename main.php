@@ -29,7 +29,7 @@ for ($i = 0; $i < 2; $i++) {
 echo "\n";
 
 do {
-  $player_total = $player->getCardsSum();
+  $player_total = $player->getCardsScore();
   echo "{$player->getName()}の現在の得点は${player_total}です\n";
   if ($player->isBurst()) {
     break;
@@ -54,12 +54,12 @@ echo "\n";
 
 echo $dealer->getSelectedCard(2);
 
-$dealer_total = $dealer->getCardsSum();
+$dealer_total = $dealer->getCardsScore();
 echo "{$dealer->getName()}の現在の得点は${dealer_total}です\n";
 
 while ($dealer_total <= 17 && !$player->isBurst()) {
   echo $dealer->choiseCard();
-  $dealer_total = $dealer->getCardsSum();
+  $dealer_total = $dealer->getCardsScore();
 }
 
 echo "\n";
