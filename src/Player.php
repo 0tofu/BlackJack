@@ -106,10 +106,19 @@ class Player {
       return 0;
     }
 
-    return array_reduce($this->cards, function ($sum, $card) {
-      $sum += $card->getPoint();
-      return $sum;
+    // 保有するカードのスコアを算出.
+    $score = array_reduce($this->cards, function ($score, $card) {
+      $score += $card->getPoint();
+      return $score;
     });
+
+    // Aを保持する場合のスコアを算出し、21以下であれば置き換え.
+    $temp_score = $score + 10;
+    if ($this->haveAce() && $temp_score <= 21) {
+      $score = $temp_score;
+    }
+
+    return $score;
   }
 
   /**
@@ -137,6 +146,24 @@ class Player {
     }
 
     return $message;
+  }
+
+  /**
+   * 手持ちのカードにエースが含まれるか検証.
+   *
+   * @return bool
+   *   結果.
+   */
+  private function haveAce() {
+    $have_ace = FALSE;
+    foreach ($this->cards as $card) {
+      if ($card->getNo() === 1) {
+        $have_ace = TRUE;
+        break;
+      }
+    }
+
+    return $have_ace;
   }
 
 }

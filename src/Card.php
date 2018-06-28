@@ -35,6 +35,16 @@ class Card {
   }
 
   /**
+   * カードの番号を返す.
+   *
+   * @return int
+   *   番号.
+   */
+  public function getNo() {
+    return $this->no;
+  }
+
+  /**
    * 表示用カード情報(記号+番号)を返す.
    *
    * @return string
