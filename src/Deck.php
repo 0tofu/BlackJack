@@ -30,6 +30,7 @@ class Deck {
    * カードを1枚引くメソッド.
    *
    * @return Card
+   *   引いたカード.
    */
   public function choiceCard() {
     return array_shift(self::$trumps);

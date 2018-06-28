@@ -25,6 +25,7 @@ class Player {
    * コンストラクタ.
    *
    * @param Deck $deck
+   *   山札.
    */
   public function __construct(Deck $deck) {
     $this->deck = $deck;
@@ -47,6 +48,7 @@ class Player {
    * 21を超えたか判定する.
    *
    * @return bool
+   *   判定結果.
    */
   public function isBurst() {
     return $this->getCardsSum() > 21;
@@ -79,7 +81,7 @@ class Player {
       return 0;
     }
 
-    return array_reduce($this->cards, function($sum, $card) {
+    return array_reduce($this->cards, function ($sum, $card) {
       $sum += $card->getPoint();
       return $sum;
     });

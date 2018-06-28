@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * ブラックジャックのメイン処理.
+ */
+
 namespace BlackJack;
 
 require_once dirname(__FILE__) . '/src/Deck.php';

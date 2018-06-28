@@ -38,6 +38,7 @@ class Card {
    * カードの記号を返す.
    *
    * @return string
+   *   記号.
    */
   public function getMark() {
     return $this->mark;
@@ -47,6 +48,7 @@ class Card {
    * カードの番号を返す.
    *
    * @return int
+   *   番号.
    */
   public function getNo() {
     return $this->no;
@@ -56,13 +58,14 @@ class Card {
    * カードの表示用番号を返す.
    *
    * @return string
+   *   表示用番号.
    */
   public function getDisplayName() {
     $conversion_table = [
       1 => 'A',
       11 => 'J',
       12 => 'Q',
-      13 => 'K'
+      13 => 'K',
     ];
 
     $display_name = $this->no;
@@ -77,6 +80,7 @@ class Card {
    * カードの得点を返す.
    *
    * @return int
+   *   得点.
    */
   public function getPoint() {
     return ($this->no > 10) ? 10 : $this->no;
