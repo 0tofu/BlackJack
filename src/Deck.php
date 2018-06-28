@@ -32,7 +32,7 @@ class Deck {
    * @return Card
    *   引いたカード.
    */
-  public function choiceCard() {
+  public function draw() {
     return array_shift(self::$trumps);
   }
 

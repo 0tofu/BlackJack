@@ -58,7 +58,7 @@ class Player {
    *   引いたカード.
    */
   public function choiseCard($hide = FALSE) {
-    $card = $this->deck->choiceCard();
+    $card = $this->deck->draw();
     $this->cards[] = $card;
 
     $message = "{$this->name}の引いたカードは{$card->getDisplayName()}です\n";
