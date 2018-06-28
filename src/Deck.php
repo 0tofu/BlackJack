@@ -2,7 +2,7 @@
 
 namespace BlackJack;
 
-require_once './Card.php';
+require_once dirname(__FILE__) . '/Card.php';
 
 /**
  * トランプの情報を保持するクラス.

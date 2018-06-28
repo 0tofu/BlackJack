@@ -2,8 +2,8 @@
 
 namespace BlackJack;
 
-require_once './Deck.php';
-require_once './Player.php';
+require_once dirname(__FILE__) . '/src/Deck.php';
+require_once dirname(__FILE__) . '/src/Player.php';
 
 echo "★☆★☆★☆★☆ ブラックジャックへようこそ ☆★☆★☆★☆★\n";
 echo "ゲームを開始します\n";
