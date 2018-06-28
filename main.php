@@ -15,22 +15,15 @@ echo "ゲームを開始します\n";
 
 $deck = new Deck();
 
-$player = new Player($deck);
-$dealer = new Player($deck);
+$player = new Player('あなた', $deck);
+$dealer = new Player('ディーラー', $deck);
 
 for ($i = 0; $i < 2; $i++) {
-  $card = $player->choiseCard();
-  echo "あなたの引いたカードは${card}です\n";
+  echo $player->choiseCard();
 }
 
 for ($i = 0; $i < 2; $i++) {
-  $card = $dealer->choiseCard();
-  if ($i == 0) {
-    echo "ディーラーの引いたカードは${card}です\n";
-  }
-  else {
-    echo "ディーラーの2枚目のカードはわかりません\n";
-  }
+  echo $dealer->choiseCard($i == 1);
 }
 
 echo "\n";
@@ -43,17 +36,13 @@ do {
   }
   echo "カードを引きますか？引く場合はYを、引かない場合はNを入力してください。\n";
 
-  $stdin = trim(fgets(STDIN));
+  $stdin = mb_strtolower(trim(fgets(STDIN)));
   switch ($stdin) {
     case 'y':
-    case 'Y':
-      $card = $player->choiseCard();
-      echo "あなたの引いたカードは${card}です\n";
+      echo $player->choiseCard();
       break;
 
     case 'n':
-    case 'N':
-      $stdin = 'n';
       break;
 
     default:
@@ -63,15 +52,13 @@ do {
 
 echo "\n";
 
-$dealer_card = $dealer->getSelectedCard(2);
-echo "ディーラーの2枚目のカードは${dealer_card}です\n";
+echo $dealer->getSelectedCard(2);
 
 $dealer_total = $dealer->getCardsSum();
 echo "ディーラーの現在の得点は${dealer_total}です\n";
 
 while ($dealer_total <= 17 && !$player->isBurst()) {
-  $card = $dealer->choiseCard();
-  echo "ディーラーの引いたカードは${card}です\n";
+  echo $dealer->choiseCard();
   $dealer_total = $dealer->getCardsSum();
 }
 
@@ -80,14 +67,14 @@ echo "\n";
 echo "あなたの得点は${player_total}です\n";
 echo "ディーラーの得点は${dealer_total}です\n";
 
-if ($player->isBurst() && $dealer->isBurst()) {
-  echo "引き分けです\n";
-} elseif ($player_total == $dealer_total) {
-  echo "引き分けです\n";
-} elseif (($player_total > $dealer_total && !$player->isBurst()) || $dealer->isBurst()) {
-  echo "あなたの勝ちです\n";
-} else {
-  echo "ディーラーの勝ちです\n";
+if ($player->isBurst() || (!$dealer->isBurst() && $dealer_total > $player_total)) {
+  echo "ディーラーの勝ちです。";
+}
+elseif ($dealer->isBurst() || $player_total > $dealer_total) {
+  echo "あなたの勝ちです。";
+}
+else {
+  echo "引き分けです。";
 }
 
 echo "ブラックジャック終了。また遊んでね\n";

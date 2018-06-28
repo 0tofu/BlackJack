@@ -8,7 +8,14 @@ namespace BlackJack;
 class Player {
 
   /**
-   * 山札.
+   * プレイヤーの名前.
+   *
+   * @var string
+   */
+  private $name;
+
+  /**
+   * 利用する山札.
    *
    * @var Deck
    */
@@ -24,24 +31,43 @@ class Player {
   /**
    * コンストラクタ.
    *
+   * @param string $name
+   *   プレイヤー名.
    * @param Deck $deck
    *   山札.
    */
-  public function __construct(Deck $deck) {
+  public function __construct($name, Deck $deck) {
+    $this->name = $name;
     $this->deck = $deck;
+  }
+
+  /**
+   * プレイヤー名を返す.
+   */
+  public function getName() {
+    return $this->name;
   }
 
   /**
    * カードを引く.
    *
+   * @param bool $hide
+   *   引いたカードの内容を隠すかどうか.
+   *
    * @return string
    *   引いたカード.
    */
-  public function choiseCard() {
+  public function choiseCard($hide = FALSE) {
     $card = $this->deck->choiceCard();
     $this->cards[] = $card;
 
-    return $card->getMark() . 'の' . $card->getDisplayName();
+    $message = "{$this->name}の引いたカードは{$card->getMark()}の{$card->getDisplayName()}です\n";
+    if ($hide) {
+      $card_num = count($this->cards);
+      $message = "{$this->name}の{$card_num}枚目のカードは分かりません。\n";
+    }
+
+    return $message;
   }
 
   /**
@@ -64,10 +90,9 @@ class Player {
    *   カード.
    */
   public function getSelectedCard($num) {
-    $num--;
-    $card = $this->cards[$num];
+    $card = $this->cards[$num - 1];
 
-    return $card->getMark() . 'の' . $card->getDisplayName();
+    return "{$this->name}の{$num}枚目のカードは{$card->getMark()}の{$card->getDisplayName()}です\n";
   }
 
   /**
