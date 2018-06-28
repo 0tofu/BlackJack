@@ -7,6 +7,8 @@ namespace BlackJack;
  */
 class Player {
 
+  const BLACK_JACK = 21;
+
   /**
    * プレイヤーの名前.
    *
@@ -77,7 +79,7 @@ class Player {
    *   判定結果.
    */
   public function isBurst() {
-    return $this->getCardsScore() > 21;
+    return $this->getCardsScore() > self::BLACK_JACK;
   }
 
   /**
@@ -114,7 +116,7 @@ class Player {
 
     // Aを保持する場合のスコアを算出し、21以下であれば置き換え.
     $temp_score = $score + 10;
-    if ($this->haveAce() && $temp_score <= 21) {
+    if ($this->haveAce() && $temp_score <= self::BLACK_JACK) {
       $score = $temp_score;
     }
 
@@ -155,15 +157,9 @@ class Player {
    *   結果.
    */
   private function haveAce() {
-    $have_ace = FALSE;
-    foreach ($this->cards as $card) {
-      if ($card->getNo() === 1) {
-        $have_ace = TRUE;
-        break;
-      }
-    }
-
-    return $have_ace;
+    return (bool) array_filter($this->cards, function ($card) {
+      return $card->getNo() === 1;
+    });
   }
 
 }
