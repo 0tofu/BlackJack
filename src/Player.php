@@ -112,4 +112,31 @@ class Player {
     });
   }
 
+  /**
+   * 引数で指定した相手との勝敗を返す.
+   *
+   * @param Player $opponent
+   *   対戦相手.
+   *
+   * @return string
+   *   勝敗結果.
+   */
+  public function printVictoryOrDefeat(Player $opponent) {
+    $self_score = $this->getCardsScore();
+    $opponent_score = $opponent->getCardsScore();
+
+    $message = '引き分けです。';
+    // 自身がバーストしていれば、相手の勝ち.
+    // 相手がバーストせず、相手の得点が高ければ相手の勝ち.
+    if ($this->isBurst() || (!$opponent->isBurst() && $opponent_score > $self_score)) {
+      $message = $opponent->getName() . 'の勝ちです。';
+    }
+    // 相手がバーストまたは自分の得点が高ければ自分の勝ち.
+    elseif ($opponent->isBurst() || $self_score > $opponent_score) {
+      $message = $this->getName() . 'の勝ちです。';
+    }
+
+    return $message;
+  }
+
 }

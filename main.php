@@ -74,14 +74,6 @@ echo "{$player->getName()}の得点は${player_total}です\n";
 echo "{$dealer->getName()}の得点は${dealer_total}です\n";
 
 // 勝敗判定.
-if ($player->isBurst() || (!$dealer->isBurst() && $dealer_total > $player_total)) {
-  echo "{$dealer->getName()}の勝ちです。";
-}
-elseif ($dealer->isBurst() || $player_total > $dealer_total) {
-  echo "{$player->getName()}の勝ちです。";
-}
-else {
-  echo "引き分けです。";
-}
+echo $player->printVictoryOrDefeat($dealer);
 
 echo "ブラックジャック終了。また遊んでね\n";
