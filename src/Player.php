@@ -61,7 +61,7 @@ class Player {
     $card = $this->deck->choiceCard();
     $this->cards[] = $card;
 
-    $message = "{$this->name}の引いたカードは{$card->getMark()}の{$card->getDisplayName()}です\n";
+    $message = "{$this->name}の引いたカードは{$card->getDisplayName()}です\n";
     if ($hide) {
       $card_num = count($this->cards);
       $message = "{$this->name}の{$card_num}枚目のカードは分かりません。\n";
@@ -92,7 +92,7 @@ class Player {
   public function getSelectedCard($num) {
     $card = $this->cards[$num - 1];
 
-    return "{$this->name}の{$num}枚目のカードは{$card->getMark()}の{$card->getDisplayName()}です\n";
+    return "{$this->name}の{$num}枚目のカードは{$card->getDisplayName()}です\n";
   }
 
   /**

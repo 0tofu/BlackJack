@@ -35,27 +35,7 @@ class Card {
   }
 
   /**
-   * カードの記号を返す.
-   *
-   * @return string
-   *   記号.
-   */
-  public function getMark() {
-    return $this->mark;
-  }
-
-  /**
-   * カードの番号を返す.
-   *
-   * @return int
-   *   番号.
-   */
-  public function getNo() {
-    return $this->no;
-  }
-
-  /**
-   * カードの表示用番号を返す.
+   * 表示用カード情報(記号+番号)を返す.
    *
    * @return string
    *   表示用番号.
@@ -68,12 +48,12 @@ class Card {
       13 => 'K',
     ];
 
-    $display_name = $this->no;
-    if (array_key_exists($display_name, $conversion_table)) {
-      $display_name = $conversion_table[$display_name];
+    $display_num = $this->no;
+    if (array_key_exists($display_num, $conversion_table)) {
+      $display_num = $conversion_table[$display_num];
     }
 
-    return (string) $display_name;
+    return $this->mark . 'の' . $display_num;
   }
 
   /**
