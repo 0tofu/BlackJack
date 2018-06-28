@@ -30,7 +30,7 @@ echo "\n";
 
 do {
   $player_total = $player->getCardsSum();
-  echo "あなたの現在の得点は${player_total}です\n";
+  echo "{$player->getName()}の現在の得点は${player_total}です\n";
   if ($player->isBurst()) {
     break;
   }
@@ -55,7 +55,7 @@ echo "\n";
 echo $dealer->getSelectedCard(2);
 
 $dealer_total = $dealer->getCardsSum();
-echo "ディーラーの現在の得点は${dealer_total}です\n";
+echo "{$dealer->getName()}の現在の得点は${dealer_total}です\n";
 
 while ($dealer_total <= 17 && !$player->isBurst()) {
   echo $dealer->choiseCard();
@@ -64,14 +64,14 @@ while ($dealer_total <= 17 && !$player->isBurst()) {
 
 echo "\n";
 
-echo "あなたの得点は${player_total}です\n";
-echo "ディーラーの得点は${dealer_total}です\n";
+echo "{$player->getName()}の得点は${player_total}です\n";
+echo "{$dealer->getName()}の得点は${dealer_total}です\n";
 
 if ($player->isBurst() || (!$dealer->isBurst() && $dealer_total > $player_total)) {
-  echo "ディーラーの勝ちです。";
+  echo "{$dealer->getName()}の勝ちです。";
 }
 elseif ($dealer->isBurst() || $player_total > $dealer_total) {
-  echo "あなたの勝ちです。";
+  echo "{$player->getName()}の勝ちです。";
 }
 else {
   echo "引き分けです。";
