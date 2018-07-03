@@ -16,6 +16,11 @@ class Deck {
    * コンストラクタ.
    */
   public function __construct() {
+    // トランプが生成済みであれば、再生成は不要.
+    if (!empty(self::$trumps)) {
+      return;
+    }
+
     // 全52枚のトランプを生成.
     foreach (self::MARKS as $mark) {
       foreach (range(1, 13) as $num) {
