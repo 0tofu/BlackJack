@@ -15,7 +15,8 @@
     },
     "autoload": {
         "psr-4": {
-            "BlackJack\\": "src/"
+            "BlackJack\\": "src/",
+            "UnitTest\\": "tests/"
         }
     }
 }
