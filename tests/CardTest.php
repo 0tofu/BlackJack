@@ -5,7 +5,7 @@ namespace UnitTest;
 use BlackJack\Card;
 use BlackJack\Deck;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
+use UnitTest\Common\Utils;
 
 /**
  * カードクラスのテスト.
@@ -22,8 +22,8 @@ class CardTest extends TestCase {
   public function testConstruct($mark, $no) {
     $card = new Card($mark, $no);
 
-    $this->assertEquals($mark, $this->getPropertyValue($card, 'mark'));
-    $this->assertEquals($no, $this->getPropertyValue($card, 'no'));
+    $this->assertEquals($mark, Utils::getPropertyValue($card, 'mark'));
+    $this->assertEquals($no, Utils::getPropertyValue($card, 'no'));
   }
 
   /**
@@ -121,23 +121,4 @@ class CardTest extends TestCase {
     return $cards;
   }
 
-  /**
-   * プライベートなプロパティの値を返す.
-   *
-   * @param Card $card
-   *   カードクラス.
-   * @param $name
-   *   プロパティ名.
-   *
-   * @return mixed
-   *   取得した値.
-   *
-   * @throws \ReflectionException
-   */
-  private function getPropertyValue(Card $card, $name) {
-    $reflection_class = new ReflectionClass(get_class($card));
-    $property = $reflection_class->getProperty($name);
-    $property->setAccessible(TRUE);
-    return $property->getValue($card);
-  }
 }
