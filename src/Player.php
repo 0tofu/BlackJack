@@ -63,10 +63,10 @@ class Player {
     $card = $this->deck->draw();
     $this->cards[] = $card;
 
-    $message = "{$this->name}の引いたカードは{$card->getDisplayName()}です\n";
+    $message = "{$this->name}の引いたカードは{$card->getDisplayName()}です";
     if ($hide) {
       $card_num = count($this->cards);
-      $message = "{$this->name}の{$card_num}枚目のカードは分かりません。\n";
+      $message = "{$this->name}の{$card_num}枚目のカードは分かりません。";
     }
 
     return $message;
@@ -94,7 +94,19 @@ class Player {
   public function getSelectedCard($num) {
     $card = $this->cards[$num - 1];
 
-    return "{$this->name}の{$num}枚目のカードは{$card->getDisplayName()}です\n";
+    return "{$this->name}の{$num}枚目のカードは{$card->getDisplayName()}です";
+  }
+
+  /**
+   * 手持ちの全てのカードを返す.
+   */
+  public function getAllCards() {
+    $message = '';
+    foreach ($this->cards as $num => $card) {
+      $message .= $this->getSelectedCard($num + 1);
+    }
+
+    return $message;
   }
 
   /**

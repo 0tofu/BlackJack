@@ -10,8 +10,36 @@ namespace BlackJack;
 require_once dirname(__FILE__) . '/src/Deck.php';
 require_once dirname(__FILE__) . '/src/Player.php';
 
-echo "★☆★☆★☆★☆ ブラックジャックへようこそ ☆★☆★☆★☆★\n";
-echo "ゲームを開始します\n";
+
+function puts($message = '') {
+  $color_codes = [
+    'reset' => '0;0',
+    'black' => '0;30',
+    'red' => '0;31',
+    'green' => '0;32',
+    'brown' => '0;33',
+    'blue' => '0;34',
+    'purple' => '0;35',
+    'cyan' => '0;36',
+    'yellow' => '1;33',
+    'white' => '1;37',
+  ];
+
+  $patterns = array_map(function ($color) {
+    return "/<{$color}>/";
+  }, array_keys($color_codes));
+
+  $replacements = array_map(function ($code) {
+    return "\033[{$code}m";
+  }, array_values($color_codes));
+
+  $message = preg_replace($patterns, $replacements, $message);
+  echo "{$message}\033[0;0m\n";
+}
+
+puts('<green>★☆★☆★☆★☆ ブラックジャックへようこそ ☆★☆★☆★☆★');
+puts('ゲームを開始します');
+puts();
 
 // 山札の生成.
 $deck = new Deck();
@@ -22,58 +50,62 @@ $dealer = new Player('ディーラー', $deck);
 
 // プレイヤーの初期カードを引く.
 for ($i = 0; $i < 2; $i++) {
-  echo $player->choiseCard();
+  puts("<cyan>{$player->choiseCard()}");
 }
+
+puts();
 
 // ディーラーの初期カードを引く.
 for ($i = 0; $i < 2; $i++) {
-  echo $dealer->choiseCard($i == 1);
+  puts("<purple>{$dealer->choiseCard($i == 1)}");
 }
 
-echo "\n";
+puts();
 
 // プレイヤーの入力に基づきカードを引く.
 do {
   $player_total = $player->getCardsScore();
-  echo "{$player->getName()}の現在の得点は${player_total}です\n";
+  puts("{$player->getName()}の現在の得点は<red>${player_total}<reset>です");
   if ($player->isBurst()) {
     break;
   }
-  echo "カードを引きますか？引く場合はYを、引かない場合はNを入力してください。\n";
+  puts('カードを引きますか？引く場合は<cyan>Y<reset>を、引かない場合は<cyan>N<reset>を入力してください。');
 
   $stdin = mb_strtolower(trim(fgets(STDIN)));
   switch ($stdin) {
     case 'y':
-      echo $player->choiseCard();
+      puts("<cyan>{$player->choiseCard()}");
       break;
 
     case 'n':
       break;
 
     default:
-      echo "'Y' または 'N' を入力してください。";
+      puts("<red>'Y' または 'N' を入力してください。");
   }
 } while ($stdin != 'n');
 
-echo "\n";
+puts();
 
 // ディーラーが2枚目に引いたカード情報及び得点を表示.
-echo $dealer->getSelectedCard(2);
+puts("<purple>{$dealer->getSelectedCard(2)}");
 $dealer_total = $dealer->getCardsScore();
-echo "{$dealer->getName()}の現在の得点は${dealer_total}です\n";
+puts("{$dealer->getName()}の現在の得点は<red>${dealer_total}<reset>です");
 
 // ディーラーのカードを引く.
 while ($dealer_total <= 17 && !$player->isBurst()) {
-  echo $dealer->choiseCard();
+  puts("<purple>{$dealer->choiseCard()}");
   $dealer_total = $dealer->getCardsScore();
 }
 
-echo "\n";
+puts();
 
-echo "{$player->getName()}の得点は${player_total}です\n";
-echo "{$dealer->getName()}の得点は${dealer_total}です\n";
+puts("{$player->getName()}の得点は<red>${player_total}<reset>です");
+puts("{$dealer->getName()}の得点は<red>${dealer_total}<reset>です");
+
+puts();
 
 // 勝敗判定.
-echo $player->printVictoryOrDefeat($dealer);
+puts("<red>{$player->printVictoryOrDefeat($dealer)}");
 
-echo "ブラックジャック終了。また遊んでね\n";
+puts('ブラックジャック終了。また遊んでね');
