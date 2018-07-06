@@ -87,25 +87,17 @@ class Player {
    *
    * @param int $num
    *   num枚目のカード.
-   *
+   * @param bool $show_player_name
+   *   名前を表示するかどうか.
+   * 
    * @return string
    *   カード.
    */
-  public function getSelectedCard($num) {
+  public function getSelectedCard($num, $show_player_name = TRUE) {
     $card = $this->cards[$num - 1];
 
-    return "{$this->name}の{$num}枚目のカードは{$card->getDisplayName()}です";
-  }
-
-  /**
-   * 手持ちの全てのカードを返す.
-   */
-  public function getAllCards() {
-    $message = '';
-    foreach ($this->cards as $num => $card) {
-      $message .= $this->getSelectedCard($num + 1);
-    }
-
+    $message = $show_player_name ? "{$this->name}の" : "";
+    $message .= "{$num}枚目のカードは{$card->getDisplayName()}です";
     return $message;
   }
 
@@ -133,6 +125,27 @@ class Player {
     }
 
     return $score;
+  }
+
+  /**
+   * 手持ちの全てのカードを表示する為の関数.
+   */
+  public function printAllCards() {
+    $message = [];
+    foreach ($this->cards as $num => $card) {
+      $message[] = $this->getSelectedCard($num + 1, FALSE);
+    }
+
+    return implode("\n", $message);
+  }
+
+  /**
+   * 現在のスコアを画面に表示する為の関数.
+   */
+  public function printCardScore() {
+    $score = $this->getCardsScore();
+
+    return "{$this->getName()}の得点は<red>{$score}<reset>です";
   }
 
   /**

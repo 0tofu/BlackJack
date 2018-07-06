@@ -43,6 +43,15 @@ function puts($message = '') {
   echo "{$message}\033[0;0m\n";
 }
 
+function print_cards_and_score($player) {
+  puts("========== {$player->getName()} の全カード ==========");
+  puts($player->printAllCards());
+
+  puts("========== {$player->getName()} の得点 ==========");
+  puts($player->printCardScore());
+}
+
+// ブラックジャックスタート.
 puts('<green>★☆★☆★☆★☆ ブラックジャックへようこそ ☆★☆★☆★☆★');
 puts('ゲームを開始します');
 puts();
@@ -70,8 +79,7 @@ puts();
 
 // プレイヤーの入力に基づきカードを引く.
 do {
-  $player_total = $player->getCardsScore();
-  puts("{$player->getName()}の現在の得点は<red>${player_total}<reset>です");
+  puts($player->printCardScore());
   if ($player->isBurst()) {
     break;
   }
@@ -96,19 +104,20 @@ puts();
 // ディーラーが2枚目に引いたカード情報及び得点を表示.
 puts("<purple>{$dealer->getSelectedCard(2)}");
 $dealer_total = $dealer->getCardsScore();
-puts("{$dealer->getName()}の現在の得点は<red>${dealer_total}<reset>です");
+puts($dealer->printCardScore());
 
 // ディーラーのカードを引く.
-while ($dealer_total <= 17 && !$player->isBurst()) {
+while ($dealer_total <= 17) {
   puts("<purple>{$dealer->choiseCard()}");
   $dealer_total = $dealer->getCardsScore();
 }
 
 puts();
 
-puts("{$player->getName()}の得点は<red>${player_total}<reset>です");
-puts("{$dealer->getName()}の得点は<red>${dealer_total}<reset>です");
+print_cards_and_score($player);
+puts();
 
+print_cards_and_score($dealer);
 puts();
 
 // 勝敗判定.
