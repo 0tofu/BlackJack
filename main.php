@@ -43,12 +43,20 @@ function puts($message = '') {
   echo "{$message}\033[0;0m\n";
 }
 
-function print_cards_and_score($player) {
+/**
+ * 引数で指定したプレイヤーのカード・得点を出力.
+ *
+ * @param Player $player
+ *   プレイヤークラス.
+ */
+function print_cards_and_score(Player $player) {
   puts("========== {$player->getName()} の全カード ==========");
   puts($player->printAllCards());
 
   puts("========== {$player->getName()} の得点 ==========");
   puts($player->printCardScore());
+
+  puts();
 }
 
 // ブラックジャックスタート.
@@ -80,7 +88,7 @@ puts();
 // プレイヤーの入力に基づきカードを引く.
 do {
   puts($player->printCardScore());
-  if ($player->isBurst()) {
+  if ($player->isBust()) {
     break;
   }
   puts('カードを引きますか？引く場合は<cyan>Y<reset>を、引かない場合は<cyan>N<reset>を入力してください。');
@@ -114,11 +122,9 @@ while ($dealer_total <= 17) {
 
 puts();
 
+// プレイヤー及びディーラーの全カード・得点を出力.
 print_cards_and_score($player);
-puts();
-
 print_cards_and_score($dealer);
-puts();
 
 // 勝敗判定.
 puts("<red>{$player->printVictoryOrDefeat($dealer)}");

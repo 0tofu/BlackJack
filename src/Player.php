@@ -78,7 +78,7 @@ class Player {
    * @return bool
    *   判定結果.
    */
-  public function isBurst() {
+  public function isBust() {
     return $this->getCardsScore() > self::BLACK_JACK;
   }
 
@@ -164,11 +164,11 @@ class Player {
     $message = '引き分けです。';
     // 自身がバーストしていれば、相手の勝ち.
     // 相手がバーストせず、相手の得点が高ければ相手の勝ち.
-    if ($this->isBurst() || (!$opponent->isBurst() && $opponent_score > $self_score)) {
+    if ($this->isBust() || (!$opponent->isBust() && $opponent_score > $self_score)) {
       $message = $opponent->getName() . 'の勝ちです。';
     }
     // 相手がバーストまたは自分の得点が高ければ自分の勝ち.
-    elseif ($opponent->isBurst() || $self_score > $opponent_score) {
+    elseif ($opponent->isBust() || $self_score > $opponent_score) {
       $message = $this->getName() . 'の勝ちです。';
     }
 
