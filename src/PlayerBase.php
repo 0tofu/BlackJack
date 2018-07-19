@@ -16,21 +16,21 @@ abstract class PlayerBase implements PlayerBaseInterface {
    *
    * @var string
    */
-  private $name;
+  protected $name;
 
   /**
    * 利用する山札.
    *
    * @var Deck
    */
-  private $deck;
+  protected $deck;
 
   /**
    * 保持しているカード.
    *
    * @var Card[]
    */
-  private $cards = [];
+  protected $cards = [];
 
   /**
    * コンストラクタ.
@@ -110,23 +110,49 @@ abstract class PlayerBase implements PlayerBaseInterface {
    *   合計点数.
    */
   public function getCardsScore() {
+    // そもそも手持ちカードが無い場合、0.
     if (count($this->cards) === 0) {
       return 0;
     }
 
-    // 保有するカードのスコアを算出.
-    $score = array_reduce($this->cards, function ($score, $card) {
-      $score += $card->getPoint();
-      return $score;
-    });
+    // 今の手持ちカードの合計を算出.
+    // Aを1or11として考える為、各パターンでの合計を配列化し
+    // その中の21を超えない最大値を返す.
+    $scores = [];
+    foreach ($this->cards as $card) {
+      // 2枚目以降の合計を数える際は全ての配列に合計を追加.
+      if (count($scores) != 0) {
+        foreach ($scores as $idx => $score) {
+          $scores[$idx] = $score + $card->getPoint();
+        }
+      }
+      else {
+        $scores[] = $card->getPoint();
+      }
 
-    // Aを保持する場合のスコアを算出し、21以下であれば置き換え.
-    $temp_score = $score + 10;
-    if ($this->haveAce() && $temp_score <= self::BLACK_JACK) {
-      $score = $temp_score;
+      // 該当カードがAの時は各合計に+10(A=11とした場合)の合計を算出.
+      if ($card->getNo() == '1') {
+        $temp_scores = $scores;
+        foreach ($temp_scores as $score) {
+          $scores[] = $score + 10;
+        }
+      }
     }
 
-    return $score;
+    // 21を超えるもの、超えないものに分割.
+    $non_bust_scores = [];
+    $bust_scores = [];
+    foreach ($scores as $score) {
+      if ($score <= self::BLACK_JACK) {
+        $non_bust_scores[] = $score;
+      }
+      else {
+        $bust_scores[] = $score;
+      }
+    }
+
+    // 21以下の最大値 or 全てバーストした場合、バーストした中の最小値(21に近い数字)を返す.
+    return count($non_bust_scores) ? max($non_bust_scores) : min($bust_scores);
   }
 
   /**
