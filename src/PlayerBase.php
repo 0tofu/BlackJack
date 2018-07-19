@@ -209,16 +209,4 @@ abstract class PlayerBase implements PlayerBaseInterface {
     return $message;
   }
 
-  /**
-   * 手持ちのカードにエースが含まれるか検証.
-   *
-   * @return bool
-   *   結果.
-   */
-  private function haveAce() {
-    return (bool) array_filter($this->cards, function ($card) {
-      return $card->getNo() === 1;
-    });
-  }
-
 }
