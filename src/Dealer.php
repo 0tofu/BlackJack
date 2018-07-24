@@ -15,7 +15,7 @@ class Dealer extends PlayerBase {
   /**
    * {@inheritdoc}
    */
-  public function initializeCard() {
+  public function giveOutCards() {
     for ($i = 0; $i < 2; $i++) {
       Utils::puts("<purple>{$this->choiseCard($i == 1)}");
     }

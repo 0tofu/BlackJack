@@ -28,7 +28,7 @@ $players = [
 
 // プレイヤー、ディーラーの初回のカードを引く.
 foreach ($players as $player) {
-  $player->initializeCard();
+  $player->giveOutCards();
 }
 
 // プレイヤー、ディーラーの以降のカードを引く.

@@ -15,7 +15,7 @@ class Player extends PlayerBase {
   /**
    * {@inheritdoc}
    */
-  public function initializeCard() {
+  public function giveOutCards() {
     for ($i = 0; $i < 2; $i++) {
       Utils::puts("<cyan>{$this->choiseCard()}");
     }

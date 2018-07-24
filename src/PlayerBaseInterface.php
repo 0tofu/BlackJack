@@ -12,7 +12,7 @@ interface PlayerBaseInterface {
   /**
    * 初回のカードを引く処理.
    */
-  public function initializeCard();
+  public function giveOutCards();
 
   /**
    * 初回以降のカードを引く処理.
