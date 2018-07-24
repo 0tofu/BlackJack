@@ -24,7 +24,7 @@ class Dealer extends PlayerBase {
   /**
    * {@inheritdoc}
    */
-  public function confirmCard() {
+  public function nextCard() {
     // ディーラーが2枚目に引いたカード情報及び得点を表示.
     Utils::puts("<purple>{$this->getSelectedCard(2)}");
     Utils::puts($this->printCardScore());

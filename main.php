@@ -33,7 +33,7 @@ foreach ($players as $player) {
 
 // プレイヤー、ディーラーの以降のカードを引く.
 foreach ($players as $player) {
-  $player->confirmCard();
+  $player->nextCard();
 }
 
 // プレイヤー及びディーラーの全カード・得点を出力.

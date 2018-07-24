@@ -17,6 +17,6 @@ interface PlayerBaseInterface {
   /**
    * 初回以降のカードを引く処理.
    */
-  public function confirmCard();
+  public function nextCard();
 
 }

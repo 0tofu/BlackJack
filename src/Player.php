@@ -24,7 +24,7 @@ class Player extends PlayerBase {
   /**
    * {@inheritdoc}
    */
-  public function confirmCard() {
+  public function nextCard() {
     // プレイヤーの入力に基づきカードを引く.
     do {
       Utils::puts($this->printCardScore());
